@@ -98,7 +98,6 @@ public class Signup extends HttpServlet {
 			MemberInfo member = memberTable.get(members);
 			String nthMemberName = member.getId();
 			Idexist = nthMemberName.equals(id);
-			System.out.println(nthMemberName+","+id+","+Idexist);
 			if(Idexist) {
 				break;
 			}//end if

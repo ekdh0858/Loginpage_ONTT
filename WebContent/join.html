@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'neul</title>
+    <link rel="stylesheet" href="css/join.css">
+</head>
+<body>
+
+    <header>
+        <h2>join us</h2>
+   
+        <div class="go">
+            <ul>
+                <li>약관동의 ▶️</li>
+               <div class="gray"><li>정보입력 ▶️</li></div>
+                <li>가입완료</li>
+            </ul>
+
+        </div>
+    </header>
+
+    <div class="basic">
+        <p>기본정보</p>
+    </div>
+    <hr>
+
+    <section>
+
+        <form action="/ONTT/signup" method="POST">
+            
+        
+
+            <h3><p>▪️아이디</p></h3>
+            <p><input type="text" id="id" name="id" placeholder="영문 소문자 / 숫자 6~20자"></p>
+
+            <h3><p>▪️비밀번호</p></h3>
+            <p><input type="text" id="pw" name="pw" placeholder="영문 소문자 / 숫자 / 특수문자 조합 8~16자"></p>
+
+            <h3><p>▪️비밀번호 확인</p></h3>
+            <p><input type="text" id="pwcheck" name="pwcheck" placeholder="입력하신 비밀번호를 다시 한 번 입력해주세요"></p>
+
+            <h3><p>▪️이름</p></h3>
+            <p><input type="text" id="name" name="name" placeholder="이름을 입력하세요"></p>
+
+            <h3><p>▪️닉네임</p></h3>
+            <p><input type="text" id="nick" name="nick"></p>
+
+            <ul class="emailbox1">
+                <li>
+                    <div class="box1">
+                        <h3><p>▪️이메일</p></h3>
+                        <p><input type="text" id="email" name="email"></p>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="emailbox2">
+                        <select name="emailDown" id="emailDown">
+                            <option value="self">직접입력</option>
+                            <option value="naver.com">@naver.com</option>
+                            <option value="hanmail.com">@hanmail.com</option>
+                            <option value="daum.com">@daum.com</option>
+                            <option value="nate.com">@nate.com</option>
+                            <option value="hotmail.com">@hotmail.com</option>
+                            <option value="gmail.com">@gmail.com</option>
+                        </select>
+                    </div>
+                </li>
+
+            </ul>
+           
+          
+                <p><input type="checkbox" id="event" name="event">정보 / 이벤트 메일 수신에 동의합니다.</p>
+          
+
+            <h3><p>▪️휴대폰 번호</p></h3>
+            <p><input type="text" id="phone" name="phone" placeholder=" 전화번호를 입력하세요."></p>
+            <p><input type="checkbox" id="event" name="event2">정보 / 이벤트 SMS 수신에 동의합니다.</p>
+          
+
+            <h3><p>추천인 코드</p></h3>
+            <p><input type="text" id="code" name="code"></p>
+            <a href="#">추천인 코드 조회</a>
+
+            <hr>
+
+            <div class="submit">
+                <ul>
+                    <li><a href="login.html">취소</a></li>
+                   
+                </ul>
+
+            </div>
+              <input type="submit" placeholder="회원가입"> 
+        </form>
+        
+    </section>
+
+
+</body>
+</html>

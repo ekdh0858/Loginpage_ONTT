@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'ImcreSoojin';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+*{
+    list-style: none;
+}
+body{
+    
+    margin: 0 auto;
+    width: 380px;
+}
+
+header{
+    font-family: 'ImcreSoojin';
+    font-size: 25px;
+    width: 380px;
+    margin: 150px auto;
+    border-bottom: 1px solid #ccc;
+}
+header p {
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.bottom ul{
+    width: 33.33%;
+    margin: auto;
+    text-align: center;
+    margin-top: 50px;
+    
+}
+.bottom li {
+    float: left;
+    padding: 18px;
+    background:#d2a679;
+    color: white;
+}
+
+section span{
+    color: red;
+}
+
+.black span{
+    color: #a6a6a6;
+}

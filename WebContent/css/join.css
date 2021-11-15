@@ -1,0 +1,85 @@
+@font-face {
+    font-family: 'ImcreSoojin';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    background-color: #FFF8E9;
+}
+
+
+header h2 {
+    width: 200px;
+    margin: 100px auto;
+    font-family: 'ImcreSoojin';
+    font-size: 30px;
+    color: #bf8040;
+}
+
+.go {
+    width: 300px;
+    padding-right: 40px;
+    margin: auto;
+    
+
+}
+.go li {
+    float: left;
+}
+.gray {
+    color: #bf8040;
+}
+
+.basic{
+    width: 200px;
+    color: #bf8040;
+    padding: 70px 0 20px 0;
+    margin-left: 20px;
+    
+  
+}
+.basic p {
+    font-size: 20px;
+}
+
+
+section{
+  
+    margin-left: 20px
+}
+
+h3, p {
+    padding-top: 18px;
+}
+input {
+
+ 
+    
+   border-style: solid;
+   border: 1px solid #bf8040;
+    width: 1470px;
+    height: 45px;
+}
+#email{
+    width: 1000px;
+}
+
+.emailbox1 li {
+    float: left;
+}
+#emailDown{
+    margin-top: 80px;
+    margin-left: 20px;
+    width: 400px;
+    height: 45px;
+    border-color: darkgoldenrod;
+}
+
+

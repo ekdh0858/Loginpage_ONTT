@@ -36,8 +36,10 @@ public class login2 extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("/login3");
 				rd.forward(request, response);
 				return;
-			}// end if
-		}// end for
+			}
+			// end if
+		}
+		// end for
 		
 		if(!exist) {
 			response.setContentType("text/html;charset=UTF-8");

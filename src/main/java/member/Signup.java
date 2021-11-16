@@ -56,7 +56,7 @@ public class Signup extends HttpServlet {
 			parameter=parameter.trim();
 			parameter=parameter.replace(" ", "");
 			if(parameter==null||parameter.isEmpty()) {
-				response.setStatus(410);
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return;
 			}
 		}				
@@ -77,18 +77,17 @@ public class Signup extends HttpServlet {
 		// 이메일의 길이(50자까지)
 		// 추천인코드의 길이(16)
 		if(id.length()>10 || name.length()>17|| nickName.length()>16|| code.length()>16|| pw.length()>16 || pwcheck.length()>16 || email.length()>50) {
-			response.setStatus(401);
-			return;}
-		else if(phone.length()!=13) // 연락처의 길이는 13자로 고정임 
-			{response.setStatus(402);}
-		else if(id.length()<6 || pw.length()<8) //아이디와 비밀번호는 6과 8이상이여야함
-			{response.setStatus(403);
-			return;}
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
+		else if(phone.length()!=13) 
+			// 연락처의 길이는 13자로 고정임 
+			{response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
+		else if(id.length()<6 || pw.length()<8) 
+			//아이디와 비밀번호는 6과 8이상이여야함
+			{response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
 		
-		if(!pw.equals(pwcheck)) { // 비밀번호와 비밀번호 확인의 값은 같아야함.
-			response.setStatus(404);
-			return;
-		}
+		if(!pw.equals(pwcheck)) { 
+			// 비밀번호와 비밀번호 확인의 값은 같아야함.
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
 		
 		// 아이디 중복 여부 체크
 		boolean Idexist = false;
@@ -103,7 +102,7 @@ public class Signup extends HttpServlet {
 			}//end if
 		}//end for				
 		if(Idexist) {
-			response.setStatus(406);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 		
@@ -122,7 +121,8 @@ public class Signup extends HttpServlet {
 		memberTable.put(id,memberinfo);
 		
 		
-		response.setStatus(201);// 새로운 리소스를 저장 했을때 200보단 세분화해서 201로 하는게 좋음
+		response.setStatus(201);
+		// 새로운 리소스를 저장 했을때 200보단 세분화해서 201(등록완료)로 하는게 좋음
 		RequestDispatcher rd = request.getRequestDispatcher("/login.html");
 		rd.forward(request, response);
 	}

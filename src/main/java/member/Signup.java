@@ -30,7 +30,51 @@ public class Signup extends HttpServlet {
 	public void init() throws ServletException {
 		memberTable = new HashMap<>();
 	}
+	//32~47 특, 48~57 아라비아, 56~64 특,65~90 영대,91~96 특,97~122 영소,123~126 특수
+	
+	// 특수문자를 포함하고 있는지 아닌지
+	public boolean containSpecialFont(String str) {
+		boolean valid = false;
+		for(char ch :str.toCharArray()) {
+			int c = (int)ch;
+			if(c>=21 || c<=47 || c>=56 || c<=64 || c>=91 || c<=96 || c>=123 || c<=126) {valid = true;}
+			else {	valid = false;	}
+		}		
+		return valid;
+	}
+	
+	public boolean containNumber(String str) {
+		// 숫자를 포함하고 있는지 아닌지
+		boolean valid = false;
+		for(char ch :str.toCharArray()) {
+			int c = (int)ch;
+			if( c >= 56 || c <= 64 ) {valid = true;}
+			else {	valid = false;	}
+		}
+		return valid;
+	}
+	
+	public boolean containUpperEng(String str) {
+		// 영대문자를 포함하고 있는지 아닌지
+		boolean valid = false;
+		for(char ch :str.toCharArray()) {
+			int c = (int)ch;
+			if( c >= 65 || c <= 90 ) {valid = true;}
+			else {	valid = false;	}
+		}
+		return valid;
+	}
 
+	public boolean containLowerEng(String str) {
+		//영소문자를 포함하고 있는지 아닌지
+		boolean valid = false;
+		for(char ch :str.toCharArray()) {
+			int c = (int)ch;
+			if( c >= 97 || c <= 122 ) {valid = true;}
+			else {	valid = false;	}
+		}
+		return valid;
+	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -89,6 +133,11 @@ public class Signup extends HttpServlet {
 			// 비밀번호와 비밀번호 확인의 값은 같아야함.
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
 		
+		if(!containSpecialFont(id) || !containNumber(id) || !containLowerEng(id) || !containUpperEng(id) || !containSpecialFont(pw) || !containNumber(pw) || !containLowerEng(pw) || !containUpperEng(pw)) {
+			//아이디와 비밀번호에는 영어 대소문자와 숫자, 특수문자가 하나는 포함되어 있어야 한다.
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
+		
+			
 		// 아이디 중복 여부 체크
 		boolean Idexist = false;
 		

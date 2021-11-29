@@ -2,6 +2,10 @@ package member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import util.DBMS;
 
 @WebServlet("/findPw2")
 public class findPw2 extends HttpServlet {
@@ -22,32 +28,28 @@ public class findPw2 extends HttpServlet {
 		name=name.replace(" ", "");
 		id=id.trim();
 		id=id.replace(" ", "");
-		boolean exist = false;		
 		
-		Map<String,MemberInfo> memberTable = Signup.memberTable;
-		for(String members : memberTable.keySet()) {
-			MemberInfo member = memberTable.get(members);
-			String nthMemberName = member.getName();
-			String nthMemberId = member.getId();
-			System.out.println(nthMemberName+","+nthMemberId+","+name+","+id);
-			if(name.equals(nthMemberName) && id.equals(nthMemberId)) {
-				//이름과 전화번호가 일치하는 정보가있다면
-				exist = true;
-				response.setStatus(HttpServletResponse.SC_OK);
-				String memberPw = member.getPw1();
-				request.setAttribute("memberPw", memberPw);
-				RequestDispatcher rd = request.getRequestDispatcher("/findPw3");
-				rd.forward(request, response);
-				return;
-			}// end if
-		}// end for
+		Connection conn = DBMS.getConnection();
+		String sql = "SELECT * FROM memberinfo WHERE name=? AND id=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				if(name.equals(rs.getString("name")) && id.equals(rs.getString("id"))) {
+					response.setStatus(HttpServletResponse.SC_OK);
+					String memberPw = rs.getString("pw");
+					request.setAttribute("memberPw", memberPw);
+					RequestDispatcher rd = request.getRequestDispatcher("/findPw3");
+					rd.forward(request, response);
+					return;
+				}else {
+					
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
-		if(!exist) {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.print("일치하는 정보가 없습니다.");
-			out.close();
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);}	
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");

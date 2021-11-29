@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import util.DBMS;
 
 @WebServlet("/signup2")
 public class Signup2 extends HttpServlet {
@@ -68,7 +71,7 @@ public class Signup2 extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
@@ -127,16 +130,29 @@ public class Signup2 extends HttpServlet {
 			//아이디와 비밀번호에는 영어 대소문자와 숫자, 특수문자가 하나는 포함되어 있어야 한다.
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
 		
+		Connection conn = DBMS.getConnection();
+		// DB에 접속
+		// 아이디 중복 여부 체크 -> 존재하는 아이디는 생성 불가
+		
+		String sql = "SELECT * FROM memberinfo WHERE id=?";
+		PreparedStatement selectpstmt;
+		try {
+			selectpstmt = conn.prepareStatement(sql);
+			selectpstmt.setString(1, id);
 			
-		// 아이디 중복 여부 체크
-		boolean Idexist = false;
-		
-		
-				
-		if(Idexist) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return;
+			ResultSet rs = selectpstmt.executeQuery();
+			while(rs.next()) {
+				if(id.equals(rs.getString("id"))) {
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;
+				}// end if
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
+		
+		
+		
+		
 		
 //		MemberInfo memberinfo = new MemberInfo();
 //		memberinfo.setId(id);
@@ -151,26 +167,23 @@ public class Signup2 extends HttpServlet {
 		
 		//회원가입(회원의 정보를 저장)
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
 			
-			Connection conn = DriverManager.getConnection("jdbc:maria://localhost:3306/memberinfo?user=root&password=0000");
 			
-			String sql = "INSERT INTO memberinfo(id, pw, name, nickname, email) VALUES (?,?,?,?,?)";
 			
-			PreparedStatement pstmt = conn.prepareStatement("sql");
+			sql = "INSERT INTO memberinfo(id, pw, name, nickname, email,code) VALUES (?,?,?,?,?,?)";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 			pstmt.setString(3, name);
 			pstmt.setString(4, nickName);
 			pstmt.setString(5, email);
+			pstmt.setString(6, code);
 			
 			int result = pstmt.executeUpdate();
 			pstmt.close();
 			conn.close();
 			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("드라이버 로딩 실패");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("DBMS 접속 실패");

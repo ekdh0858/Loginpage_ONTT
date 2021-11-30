@@ -29,8 +29,8 @@ public class findId1 extends HttpServlet {
 			out.close();
 			return;
 		}	
-		if(name.length()>10 || name.length()<6 || email.length()>50) {
-			// 이름의 입력 조건에 맞게 적었는가
+		if(name.length()>17|| email.length()>50) {
+			
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}

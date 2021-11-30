@@ -33,6 +33,8 @@ public class findPw2 extends HttpServlet {
 		String sql = "SELECT * FROM memberinfo WHERE name=? AND id=?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,name);
+			pstmt.setString(2,id);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				if(name.equals(rs.getString("name")) && id.equals(rs.getString("id"))) {

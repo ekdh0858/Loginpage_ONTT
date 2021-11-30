@@ -30,7 +30,7 @@ public class Signup2 extends HttpServlet {
 		boolean valid = false;
 		for(char ch :str.toCharArray()) {
 			int c = (int)ch;
-			if(c>=21 || c<=47 || c>=56 || c<=64 || c>=91 || c<=96 || c>=123 || c<=126) {valid = true;}
+			if((c>=21 && c<=47) || (c>=56 && c<=64) || (c>=91 && c<=96) || (c>=123 && c<=126)) {valid = true; return valid;}
 			else {	valid = false;	}
 		}		
 		return valid;
@@ -41,7 +41,7 @@ public class Signup2 extends HttpServlet {
 		boolean valid = false;
 		for(char ch :str.toCharArray()) {
 			int c = (int)ch;
-			if( c >= 56 || c <= 64 ) {valid = true;}
+			if( c >= 56 && c <= 64 ) {valid = true;return valid;}
 			else {	valid = false;	}
 		}
 		return valid;
@@ -52,7 +52,7 @@ public class Signup2 extends HttpServlet {
 		boolean valid = false;
 		for(char ch :str.toCharArray()) {
 			int c = (int)ch;
-			if( c >= 65 || c <= 90 ) {valid = true;}
+			if( c >= 65 && c <= 90 ) {valid = true;return valid;}
 			else {	valid = false;	}
 		}
 		return valid;
@@ -63,7 +63,7 @@ public class Signup2 extends HttpServlet {
 		boolean valid = false;
 		for(char ch :str.toCharArray()) {
 			int c = (int)ch;
-			if( c >= 97 || c <= 122 ) {valid = true;}
+			if( c >= 97 && c <= 122 ) {valid = true;return valid;}
 			else {	valid = false;	}
 		}
 		return valid;
@@ -103,7 +103,7 @@ public class Signup2 extends HttpServlet {
 			phone =phone.substring(0,3)+"-"+phone.substring(3,7)+"-"+phone.substring(7);
 		}
 		// 직접입력이 아닐시 이메일주소는 도메인 주소까지 포함한다.
-		if(!emailDown.equals("직접입력")) {
+		if(!emailDown.equals("self")) {
 		email=email+emailDown;}
 		
 		
@@ -113,7 +113,7 @@ public class Signup2 extends HttpServlet {
 		// 닉네임의 길이(16자 까지만)
 		// 이메일의 길이(50자까지)
 		// 추천인코드의 길이(16)
-		if(id.length()>10 || name.length()>17|| nickName.length()>16|| code.length()>16|| pw.length()>16 || pwcheck.length()>16 || email.length()>50) {
+		if(id.length()>10 || id.length()<6 || name.length()>17|| nickName.length()>16|| code.length()>16|| pw.length()>16 || pwcheck.length()>16 || email.length()>50) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
 		else if(phone.length()!=13) 
 			// 연락처의 길이는 13자로 고정임 
@@ -128,7 +128,10 @@ public class Signup2 extends HttpServlet {
 		
 		if(!containSpecialFont(id) || !containNumber(id) || !containLowerEng(id) || !containUpperEng(id) || !containSpecialFont(pw) || !containNumber(pw) || !containLowerEng(pw) || !containUpperEng(pw)) {
 			//아이디와 비밀번호에는 영어 대소문자와 숫자, 특수문자가 하나는 포함되어 있어야 한다.
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
+			
+		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);return;}
+		System.out.println(containSpecialFont(id)+","+containNumber(id)+","+containLowerEng(id));
+		System.out.println(containSpecialFont(pw)+","+containNumber(pw)+","+containLowerEng(pw));
 		
 		Connection conn = DBMS.getConnection();
 		// DB에 접속
@@ -170,7 +173,7 @@ public class Signup2 extends HttpServlet {
 			
 			
 			
-			sql = "INSERT INTO memberinfo(id, pw, name, nickname, email,code) VALUES (?,?,?,?,?,?)";
+			sql = "INSERT INTO memberinfo(id, pw, name, nickname, email, code, phone) VALUES (?,?,?,?,?,?,?)";
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -179,6 +182,7 @@ public class Signup2 extends HttpServlet {
 			pstmt.setString(4, nickName);
 			pstmt.setString(5, email);
 			pstmt.setString(6, code);
+			pstmt.setString(7, phone);
 			
 			int result = pstmt.executeUpdate();
 			pstmt.close();

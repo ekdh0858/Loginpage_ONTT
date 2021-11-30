@@ -12,7 +12,7 @@ public class DBMS {
 		InitialContext ic;
 		try {
 			ic = new InitialContext();
-			DataSource ds = (DataSource) ic.lookup("java:comp/env/maria/dbms");
+			DataSource ds = (DataSource) ic.lookup("java:comp/env/maria/ONTT");
 			Connection conn = ds.getConnection();
 			return conn;
 		} catch (NamingException e) {

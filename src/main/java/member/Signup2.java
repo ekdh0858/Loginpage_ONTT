@@ -41,7 +41,7 @@ public class Signup2 extends HttpServlet {
 		boolean valid = false;
 		for(char ch :str.toCharArray()) {
 			int c = (int)ch;
-			if( c >= 56 && c <= 64 ) {valid = true;return valid;}
+			if( c >= 48 && c <= 57 ) {valid = true;return valid;}
 			else {	valid = false;	}
 		}
 		return valid;
